@@ -5,8 +5,8 @@ from scipy.signal import find_peaks
 
 def write_feature_set(data_sheet, sub_task):
     for task in ['classification']: 
-        feature_set= extract_features(data_sheet, task, sub_task)
-        commons.array_to_csv(feature_set, constants.FEATURES_DIR + task + '_'+ sub_task+'_features.csv')
+        feature_set = extract_features(data_sheet, task, sub_task)
+        # commons.array_to_csv(feature_set, constants.FEATURES_DIR + task + '_'+ sub_task+'_features.csv')
     return feature_set
 
 def simple_moving_average(signal, window_size):

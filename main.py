@@ -8,25 +8,37 @@ CORS(app)
 # Home route
 @app.route('/')
 def home():
-    return "Welcome to the Flask API!"
+    return "Welcome"
 
 # Endpoint to add a new business
 @app.route('/run_model', methods=['POST'])
 def run_model():
     # Extract URL from the JSON request
     data = request.get_json()
-    url = data.get('url')  # Expecting {"url": "some_url_here"}
+    # url = data.get('url')  
+    urls = data.get('urls')  
     
-    print(url)
-    print(data,url)
-    if not url:
+    print(f"URLSSS:{urls}")
+    print(data,urls)
+    if not urls:
         return jsonify({"error": "URL is required"}), 400
+    
+    results = []
+    for url in urls:
+        print(f"Processing URL: {url}")
+        try:
+            prediction = test.perform_test(url)
+            results.append(prediction)
+        except Exception as e:
+            results.append(f"Error processing {url}: {str(e)}")
 
-    result = f"Model processed the URL: {url}"
-    print(result)
+    return jsonify({"results": results})
 
-    prediction = test.perform_test(url)
-    return jsonify({"message": prediction})
+    # result = f"Model processed the URL: {url}"
+    # print(result)
+
+    # prediction = test.perform_test(url)
+    # return jsonify({"message": prediction})
 
 # Start the Flask server
 if __name__ == '__main__':
