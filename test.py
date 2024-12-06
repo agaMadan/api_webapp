@@ -47,6 +47,12 @@ def send_features_to_scoring_uri(features):
         print(f"Error sending features to scoring URI: {e}")
         return None
 
+def inverse_transform(predictions):
+    if isinstance(predictions, list):
+        return [constants.TARGET_MAP.get(pred, f"Unknown ({pred})") for pred in predictions]
+    else:
+        return constants.TARGET_MAP.get(predictions, f"Unknown ({predictions})")
+
 def perform_test(test_file_url):
     try:
         wavelength, intensity = commons.get_wavelength_intensity_test_data(test_file_url)
@@ -90,7 +96,7 @@ def perform_test(test_file_url):
                 # print("Extracted Prediction:", prediction)
                 
                 # print("Prediction:", prediction)
-
+                prediction = inverse_transform(prediction)
                 result = {
                     "status": "success",
                     "data": {

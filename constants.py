@@ -3,4 +3,12 @@ END_WAVELENGTH = 600
 FEATURES_DIR = "features/"
 SUB_TASK_TRAIN = "train"
 SUB_TASK_TEST = "test"
-TARGET_MAP = {'THF': 0, 'EMK': 1, 'BENZ': 2, 'BENZALD': 3, 'TOL': 4, 'XYL': 5, 'CTCL': 6}
+TARGET_MAP = {
+    0: 'Tetrahydrofuran',
+    1: 'Methyl Ethyl Ketone',
+    2: 'Benzene',
+    3: 'Benzaldehyde',
+    4: 'Toluene',
+    5: 'Xylene',
+    6: 'CTCL'
+}

@@ -48,12 +48,35 @@ def read_data_as_data_frame(new_data_file_path):
 
     return df
 
+# def get_voc_label(input_str):
+#     try:
+#         if os.path.isfile(input_str):
+#             # Check if the file path exists and is valid
+#             file_name = get_file_name(input_str)
+#             voc_name = get_voc_name(file_name)
+#         else:
+#             # Assume the input is directly the VOC name
+#             voc_name = input_str
 
+#         # Retrieve the VOC label from the map
+#         return constants.TARGET_MAP[voc_name.upper().strip()]
 
-def fetch_label_for_VOC(voc_name):
-    le = joblib.load(constants.LABEL_ENCODER)
-    return le.transform([voc_name])[0]
+#     except FileNotFoundError as fnfe:
+#         print(f"Error: The file '{input_str}' does not exist.")
+#         raise fnfe
+#     except KeyError as ke:
+#         print(f"Error: VOC name '{voc_name}' not found in constants.TARGET_MAP.")
+#         raise ke
+#     except Exception as e:
+#         print(f"An unexpected error occurred while processing the file or VOC name: {e}")
+#         raise e
+    
+# def get_voc_name(file_path):
+#     file_name = os.path.basename(file_path)
+#     return file_name[:file_name.find('_')].upper().strip()
 
+# def get_file_name(file_path):
+#     return os.path.basename(file_path)
 
 def array_to_csv(results, results_file_path):
     directory = os.path.dirname(results_file_path)
@@ -63,12 +86,8 @@ def array_to_csv(results, results_file_path):
     pd.DataFrame(np.array(results)).to_csv(results_file_path)
     return
 
-
-
 def get_wavelength_intensity_test_data(test_data_file):
     df = read_data_as_data_frame(test_data_file)
     wavelength = pd.DataFrame([df['Spectrometer Cluster']['Spectrometer Wavelength Value']])
     intensity=pd.DataFrame(df['Spectrometer Cluster']['Spectrometer Intensity Value'])
     return wavelength, intensity
-
-
