@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
-import test
+import test, temp
 
 app = Flask(__name__)
 CORS(app)
@@ -10,7 +10,6 @@ def home():
     return "Welcome"
 
 @app.route('/run_model', methods=['POST'])
-# @cross_origin()  # Enable CORS for this specific route
 def run_model():
     # Extract URL from the JSON request
     data = request.get_json()
@@ -38,6 +37,25 @@ def run_model():
 
     # prediction = test.perform_test(url)
     # return jsonify({"message": prediction})
+
+
+
+@app.route('/train_model', methods=['POST'])
+def train_model():
+    data = request.get_json()
+    urls = data.get('urls', [])
+    
+    if not urls:
+        print('Hi')
+        return jsonify({"error": "No URLs provided"}), 400
+    
+    results = [f"Processed training for {url}" for url in urls]
+    
+    return jsonify({
+        "message": "Model training initiated",
+        "results": results
+    })
+
 
 if __name__ == '__main__':
     app.run(debug=True)
